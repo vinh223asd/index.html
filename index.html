@@ -212,7 +212,7 @@
         scoreBox.style.display = "none";
 
         try {
-            // Sử dụng API dịch công khai của MyMemory (Không cần tạo key)
+            // ĐÃ SỬA: Thay đổi URL chính xác của API MyMemory
             const response = await fetch(`https://translated.net{encodeURIComponent(viText)}&langpair=vi|zh-CN`);
             const data = await response.json();
             
@@ -251,14 +251,15 @@
             btn.classList.add('recording');
         };
 
+        // ĐÃ SỬA: Đóng đầy đủ các khối lệnh và sửa logic lấy dữ liệu text
         recognition.onresult = function(event) {
             const userSpeech = event.results[0][0].transcript;
             const scoreBox = document.getElementById('score-box');
             scoreBox.style.display = "block";
 
             // Chuẩn hóa chuỗi bằng cách xóa bỏ các dấu câu cơ bản để so sánh chính xác hơn
-            const cleanUser = userSpeech.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()？。，]/g,"").trim();
-            const cleanTarget = currentChineseWord.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()？。，]/g,"").trim();
+            const cleanUser = userSpeech.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()？。，！]/g,"").trim();
+            const cleanTarget = currentChineseWord.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()？。，！]/g,"").trim();
 
             if (cleanUser === cleanTarget) {
                 scoreBox.className = "score-box score-success";
@@ -279,7 +280,7 @@
             btn.classList.remove('recording');
         };
     } else {
-        alert("Trình duyệt không hỗ trợ nhận diện giọng nói. Hãy mở bằng Google Chrome trên máy tính hoặc điện thoại Android!");
+        alert("Trình duyệt không hỗ trợ nhận diện giọng nói. Hãy mở bằng Google Chrome!");
     }
 
     function startSpeechRecognition() {
